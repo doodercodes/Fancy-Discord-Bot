@@ -36,6 +36,8 @@ client.on("messageCreate", async (message) => {
   // the command (coming right after the prefix)
   const cmd = args.shift().toLowerCase();
 
+  if (cmd.length === 0) return;
+  let command = client.commands.get(cmd);
 
   // bot mentioned
   const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
