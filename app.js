@@ -18,6 +18,7 @@ const client = new discord.Client({
 
 client.commands = new discord.Collection();
 
+// on client ready
 client.once(discord.Events.ClientReady, (c) => {
   client.user.setStatus("dnd");
   console.log(`${c.user.tag} is Online!`);
@@ -26,12 +27,16 @@ client.once(discord.Events.ClientReady, (c) => {
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
   if (!message.content.startsWith($PREFIX)) return;
-
-  const args = message.content.slice($PREFIX.length);
+  
+  // everything in the message but the prefix
+  const args = message.content.slice($PREFIX.length).trim().split(/ +/g);
+  // everything after the prefix
+  const cmd = args.shift().toLowerCase();
 
   // console.log(
   //   `${client.user.tag} has picked up a message sent to the server: \n"${message.content}"`
   // );
+
   // bot mentioned
   const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
   if (message.content.match(prefixMention)) {
