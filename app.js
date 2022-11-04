@@ -27,15 +27,15 @@ client.once(discord.Events.ClientReady, (c) => {
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
   if (!message.content.startsWith($PREFIX)) return;
-  
+  // console.log(
+  //   `${client.user.tag} has picked up a message sent to the server: \n"${message.content}"`
+  // );
+
   // everything in the message but the prefix
   const args = message.content.slice($PREFIX.length).trim().split(/ +/g);
   // everything after the prefix
   const cmd = args.shift().toLowerCase();
 
-  // console.log(
-  //   `${client.user.tag} has picked up a message sent to the server: \n"${message.content}"`
-  // );
 
   // bot mentioned
   const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
