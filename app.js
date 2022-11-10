@@ -11,12 +11,17 @@ const intents = [
   discord.GatewayIntentBits.GuildMessages,
   discord.GatewayIntentBits.MessageContent,
 ];
+
 const client = new discord.Client({
   disableEveryone: false,
   intents,
 });
 
 client.commands = new discord.Collection();
+
+["command"].forEach((handler) => {
+  require(`handlers/${handler}`)(client);
+});
 
 // on client ready
 client.once(discord.Events.ClientReady, (c) => {
@@ -37,7 +42,10 @@ client.on("messageCreate", async (message) => {
   const cmd = args.shift().toLowerCase();
 
   if (cmd.length === 0) return;
+
   let command = client.commands.get(cmd);
+
+  if (command) command.run(client, message, args);
 
   // bot mentioned
   const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
