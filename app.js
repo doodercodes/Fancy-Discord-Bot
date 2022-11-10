@@ -20,13 +20,21 @@ const client = new discord.Client({
 client.commands = new discord.Collection();
 
 ["command"].forEach((handler) => {
-  require(`handlers/${handler}`)(client);
+  require(`./handlers/${handler}`)(client);
 });
 
 // on client ready
 client.once(discord.Events.ClientReady, (c) => {
-  client.user.setStatus("dnd");
   console.log(`${c.user.tag} is Online!`);
+  client.user.setPresence({
+    activities: [
+      {
+        name: "with DISCORD.JS",
+        type: discord.ActivityType.Playing,
+      },
+    ],
+    status: "dnd",
+  });
 });
 
 client.on("messageCreate", async (message) => {
