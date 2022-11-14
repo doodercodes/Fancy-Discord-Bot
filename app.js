@@ -4,8 +4,6 @@ const fs = require("node:fs");
 const path = require("node:path");
 require("dotenv").config();
 
-const $PREFIX = config.default_prefix;
-
 const intents = [
   discord.GatewayIntentBits.Guilds,
   discord.GatewayIntentBits.GuildMessages,
@@ -17,6 +15,7 @@ const client = new discord.Client({
   intents,
 });
 
+const $PREFIX = config.default_prefix;
 client.commands = new discord.Collection();
 
 ["command"].forEach((handler) => {
@@ -40,9 +39,6 @@ client.once(discord.Events.ClientReady, (c) => {
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
   if (!message.content.startsWith($PREFIX)) return;
-  // console.log(
-  //   `${client.user.tag} has picked up a message sent to the server: \n"${message.content}"`
-  // );
 
   // array of everything in the message but the prefix
   const args = message.content.slice($PREFIX.length).trim().split(/ +/g);
@@ -50,11 +46,12 @@ client.on("messageCreate", async (message) => {
   const cmd = args.shift().toLowerCase();
 
   if (cmd.length === 0) return;
-
   let command = client.commands.get(cmd);
-
-  if (command) command.run(client, message, args);
-
+  if (command) {
+    command.run(client, message, args);
+    console.log(command);
+  }
+  if (!command) console.log("Command Not Found");
   // bot mentioned
   const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
   if (message.content.match(prefixMention)) {
