@@ -1,3 +1,4 @@
+console.clear();
 const discord = require("discord.js");
 const config = require("./config.json");
 const fs = require("node:fs");
@@ -41,14 +42,20 @@ client.on("messageCreate", async (message) => {
   if (!message.content.startsWith($PREFIX)) return;
 
   // array of everything in the message but the prefix
-  const args = message.content.slice($PREFIX.length).trim().split(/ +/g);
+  const argsArr = message.content
+    .toLowerCase()
+    .slice($PREFIX.length)
+    .trim()
+    .split(/ +/g);
   // the command (coming right after the prefix)
-  const cmd = args.shift().toLowerCase();
+
+  const cmd = argsArr.shift().toLowerCase();
+  console.log(cmd, argsArr);
 
   if (cmd.length === 0) return;
   let command = client.commands.get(cmd);
   if (command) {
-    command.run(client, message, args);
+    command.run(client, message, argsArr);
     console.log(command);
   }
   if (!command) console.log("Command Not Found");
