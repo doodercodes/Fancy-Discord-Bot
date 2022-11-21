@@ -1,4 +1,3 @@
-console.clear();
 const discord = require("discord.js");
 const config = require("./config.json");
 const fs = require("node:fs");
@@ -48,9 +47,7 @@ client.on("messageCreate", async (message) => {
     .trim()
     .split(/ +/g);
   // the command (coming right after the prefix)
-
   const cmd = argsArr.shift().toLowerCase();
-  console.log(cmd, argsArr);
 
   if (cmd.length === 0) return;
   let command = client.commands.get(cmd);
