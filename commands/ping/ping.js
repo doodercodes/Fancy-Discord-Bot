@@ -1,5 +1,5 @@
 const obj = {
-  name: "ping",
+  name: "Ping",
   category: `Utility`,
   description: "Pings the bot",
   run: async (client, message, args) => {
