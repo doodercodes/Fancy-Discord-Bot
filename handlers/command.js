@@ -18,9 +18,7 @@ const read = (client) => {
       const pull = require(`${commandsContainer}/${file}`);
       const { name, category, description, run } = pull;
       if (name) cmdName = name.toString().toLowerCase();
-      else {
-        cmdName = "";
-      }
+      else cmdName = "";
 
       if (cmdName && category && description && run) {
         client.commands.set(cmdName, pull);
