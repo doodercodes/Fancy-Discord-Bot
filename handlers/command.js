@@ -16,12 +16,17 @@ const read = (client) => {
 
     for (const file of commandsArray) {
       const pull = require(`${commandsContainer}/${file}`);
+      const { name, category, description, run } = pull;
+      if (name) cmdName = name.toString().toLowerCase();
+      else {
+        cmdName = "";
+      }
 
-      if (pull.name && pull.category && pull.description && pull.run) {
-        client.commands.set(pull.name, pull);
-        table.addRow(file, pull.category, pull.description, "✅");
+      if (cmdName && category && description && run) {
+        client.commands.set(cmdName, pull);
+        table.addRow(cmdName, category, description, "✅");
       } else {
-        table.addRow(file, `❌`);
+        table.addRow(cmdName);
         continue;
       }
     }
