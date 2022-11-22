@@ -134,3 +134,4 @@ test-dir/
 .notes
 Discord-Bot.code-workspace
 out.png
+.vscode/settings.json
