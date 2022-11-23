@@ -7,6 +7,7 @@ const ascii = require("ascii-table");
 
 let table = new ascii(`Commands`);
 table.setHeading("Command", "Category", "Description", "Load status");
+
 class DiscordBot extends Client {
   constructor(props) {
     super(props);
