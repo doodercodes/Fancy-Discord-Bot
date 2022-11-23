@@ -67,8 +67,6 @@ class DiscordBot extends Client {
           let cmd = require(CommandsDir + "/" + file);
           const { name, category, description, run } = cmd;
           const cmdName = file.split(".")[0].toLowerCase();
-          //  console.log(name);
-
           if (!name || !category || !description || !run) {
             table.addRow(cmdName, "X", "X");
             return this.log(
@@ -79,7 +77,7 @@ class DiscordBot extends Client {
           } else {
             table.addRow(cmdName, category, description);
             this.commands.set(cmdName, cmd);
-            this.log("Command Loaded: " + file.split(".")[0]);
+            this.logInfo("Command Loaded: " + file.split(".")[0]);
           }
         });
       console.log(table.toString());
@@ -93,7 +91,7 @@ class DiscordBot extends Client {
         files.forEach((file) => {
           const event = require(EventsDir + "/" + file);
           this.on(file.split(".")[0], event.bind(null, this));
-          this.logger.log("Event Loaded: " + file.split(".")[0]);
+          this.logInfo("Event Loaded: " + file.split(".")[0]);
         });
     });
   }
@@ -104,9 +102,6 @@ class DiscordBot extends Client {
       res(guild);
     });
   }
-  log(Text) {
-    this.logger.log(Text);
-  }
   sendError(Channel, Error) {
     let embed = new EmbedBuilder()
       .setTitle("An error occurred")
@@ -115,12 +110,16 @@ class DiscordBot extends Client {
       .setFooter({
         text: "If you think this as a bug, please report it in the support server!",
       });
-
     Channel.send({
       embeds: [embed],
     });
   }
-
+  logInfo(Text) {
+    this.logger.logInfo(Text);
+  }
+  logReady(Text) {
+    this.logger.logReady(Text);
+  }
   build() {
     this.login(this.botconfig.Token);
   }

@@ -3,24 +3,36 @@ const colors = require("colors");
 
 class Logger {
   constructor(LoggingFile) {
+    this.d = new Date();
     this.logger = winston.createLogger({
       transports: [new winston.transports.File({ filename: LoggingFile })],
     });
   }
 
-  log(Text) {
-    let d = new Date();
+  logInfo(Text) {
     this.logger.log({
       level: "info",
       message:
-        `${d.getHours()}:${
-          d.getMinutes
-        } - ${d.getDate()}:${d.getMonth()}:${d.getFullYear()} | Info: ` + Text,
+        `${this.d.getHours()}:${this.d.getMinutes()} - ${this.d.getMonth()}:${this.d.getDate()}:${this.d.getFullYear()} | Info: ` +
+        Text,
     });
     console.log(
       colors.green(
-        `${d.getDate()}:${d.getMonth()}:${d.getFullYear()} - ${d.getHours()}:${d.getMinutes()}`
+        `${this.d.getMonth()}:${this.d.getDate()}:${this.d.getFullYear()} - ${this.d.getHours()}:${this.d.getMinutes()}`
       ) + colors.yellow(" | Info: " + Text)
+    );
+  }
+  logReady(Text) {
+    this.logger.log({
+      level: "info",
+      message: Text,
+    });
+    console.log(
+      colors.green(
+        `${this.d.getMonth()}:${this.d.getDate()}:${this.d.getFullYear()} - ${this.d.getHours()}:${this.d.getMinutes()}` +
+          ` ${colors.yellow("|")} ` +
+          Text
+      )
     );
   }
 }
