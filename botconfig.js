@@ -4,6 +4,11 @@ module.exports = {
   "Token": process.env.Token || "", // Discord Bot Token
   "ClientID": process.env.Discord_ClientID || "", // Discord Client ID
   "ClientSecret": process.env.Discord_ClientSecret || "", // Discord Client Secret
+  "Presence": {
+    status: "dnd", // You can show online, idle, and dnd
+    name: "DISCORD.JS", // The message shown
+    type: "Listening", // Playing, Watching, Listening, Streaming
+  },
   // Spotify Integration, allows you to enter a spotify link.
   "Spotify": {
     ClientID: process.env.Spotify_ClientID || "", // Spotify Client ID
